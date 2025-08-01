@@ -1126,5 +1126,3 @@ bool HTTPClient::handleGetDatapointResponse(const std::string& in) {
     std::cout << basename(__FILE__) << ":" <<__FUNCTION__<<":"<< __LINE__ << " handleSetDatapointResponse " << std::endl;
     return(false);
 }
-
-#endif /*__services_http_hpp_cpp__*/

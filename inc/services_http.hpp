@@ -1040,6 +1040,18 @@ class Http2 final {
             
             void opaqueData(std::uint64_t data) { m_opaque_data = data; }
             std::uint64_t opaqueData() const { return m_opaque_data; }
+            
+            // Add deserialization method
+            bool deserialize(const std::string& data) {
+                if(data.length() != 8) return false; // Ping is exactly 8 bytes
+                
+                std::istringstream iss(data);
+                std::uint64_t ping_data;
+                iss.read(reinterpret_cast<char*>(&ping_data), sizeof(ping_data));
+                
+                m_opaque_data = ping_data;
+                return true;
+            }
     };
 
     struct Goaway {
@@ -1128,6 +1140,18 @@ class Http2 final {
             
             void windowSizeIncrement(std::uint32_t increment) { m_window_size_increment = increment; }
             std::uint32_t windowSizeIncrement() const { return m_window_size_increment; }
+            
+            // Add deserialization method
+            bool deserialize(const std::string& data) {
+                if(data.length() != 4) return false; // Window update is exactly 4 bytes
+                
+                std::istringstream iss(data);
+                std::uint32_t increment;
+                iss.read(reinterpret_cast<char*>(&increment), sizeof(increment));
+                
+                m_window_size_increment = increment;
+                return true;
+            }
     };
 
     struct Continuation {
