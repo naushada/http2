@@ -60,17 +60,15 @@ target_link_libraries(gnmi_all_protos INTERFACE
     collector_proto
 )
 
-# Export variables for parent CMakeLists.txt
+# Set variables for use in main CMakeLists.txt
 set(GNMI_PROTO_INCLUDE_DIRS 
     ${CMAKE_CURRENT_BINARY_DIR}
     ${PROTOBUF_INCLUDE_DIRS}
-    PARENT_SCOPE
 )
 
 set(GNMI_PROTO_LIBRARIES 
     gnmi_all_protos
     ${PROTOBUF_LIBRARIES}
-    PARENT_SCOPE
 )
 
 # Print status
