@@ -873,7 +873,7 @@ class Http2 final {
             Priority(): m_exclusive(0), m_stream_dependency(0), m_weight(16) {}
             ~Priority() = default;
             
-            std::string serialize() {
+            std::string serialize() const {
                 std::stringstream ss;
                 std::uint32_t fourBytes;
                 
@@ -906,7 +906,7 @@ class Http2 final {
             RstStream(): m_error_code(static_cast<std::uint32_t>(ErrorCodes::NO_ERROR)) {}
             ~RstStream() = default;
             
-            std::string serialize() {
+            std::string serialize() const {
                 std::stringstream ss;
                 std::uint32_t error_code = m_error_code;
                 ss.write(reinterpret_cast<char*>(&error_code), sizeof(error_code));
@@ -943,7 +943,7 @@ class Http2 final {
             Settings(): m_settings() {}
             ~Settings() = default;
             
-            std::string serialize() {
+            std::string serialize() const {
                 std::stringstream ss;
                 for(const auto& setting : m_settings) {
                     std::uint16_t identifier = setting.first;
@@ -1031,7 +1031,7 @@ class Http2 final {
             Ping(): m_opaque_data(0) {}
             ~Ping() = default;
             
-            std::string serialize() {
+            std::string serialize() const {
                 std::stringstream ss;
                 std::uint64_t data = m_opaque_data;
                 ss.write(reinterpret_cast<char*>(&data), sizeof(data));
@@ -1065,7 +1065,7 @@ class Http2 final {
                      m_additional_debug_data("") {}
             ~Goaway() = default;
             
-            std::string serialize() {
+            std::string serialize() const {
                 std::stringstream ss;
                 
                 // Last Stream ID (31 bits)
@@ -1131,7 +1131,7 @@ class Http2 final {
             WindowUpdate(): m_window_size_increment(0) {}
             ~WindowUpdate() = default;
             
-            std::string serialize() {
+            std::string serialize() const {
                 std::stringstream ss;
                 std::uint32_t increment = m_window_size_increment;
                 ss.write(reinterpret_cast<char*>(&increment), sizeof(increment));
