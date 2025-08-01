@@ -1,4 +1,8 @@
 #include "services_http.hpp"
+#include <sstream>
+#include <iostream>
+#include <algorithm>
+#include <cstring>
 
 // HTTP/2 HPACK Implementation
 HPACK::Encoder::Encoder() : m_max_table_size(4096) {}
