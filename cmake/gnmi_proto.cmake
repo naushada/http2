@@ -2,7 +2,12 @@
 # This file provides protobuf compilation targets for gNMI proto files
 
 # Set up protobuf import directories for gNMI
-set(GNMI_PROTO_DIR "${CMAKE_CURRENT_SOURCE_DIR}/third_party/gnmi/proto")
+set(GNMI_PROTO_DIR 
+	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/gnmi/proto/gnmi"
+	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/gnmi/proto/gnmi_ext"
+	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/gnmi/proto/target"
+	"${CMAKE_CURRENT_SOURCE_DIR}/third_party/gnmi/proto/collector"
+)
 set(GNMI_IMPORT_DIRS 
     "${GNMI_PROTO_DIR}"
     "${CMAKE_CURRENT_SOURCE_DIR}/third_party/gnmi"
