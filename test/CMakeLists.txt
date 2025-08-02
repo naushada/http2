@@ -5,25 +5,10 @@ find_package(GTest REQUIRED)
 
 include_directories(../inc)
 include_directories(inc)
-#include_directories(../third_party/gnmi)
+include_directories(${GNMI_PROTO_INCLUDE_DIRS})
 
-set(PROTO_DIR "../third_party/gnmi/proto")
-message(STATUS "Proto PATH: " ${PROTO_DIR})
-set(PROTO_FILES 
-    "${PROTO_DIR}/gnmi/gnmi.proto"
-    "${PROTO_DIR}/gnmi_ext/gnmi_ext.proto"
-    "${PROTO_DIR}/collector/collector.proto")
+message(STATUS "Include PATH: " ${GNMI_PROTO_INCLUDE_DIRS})
 
-include_directories(${PROTOBUF_INCLUDE_DIRS})
-message(STATUS "Include PATH: " ${PROTOBUF_INCLUDE_DIRS})
-
-# Place to look for proto files
-set(PROTOBUF_IMPORT_DIRS "${PROTO_DIR}/gnmi_ext" 
-                         "${PROTO_DIR}/collector" 
-                         "${PROTO_DIR}/gnmi")
-
-set(PROTO_INCLUDE_DIRS "${PROTO_DIR}")
-protobuf_generate_cpp(PROTO_SRCS  PROTO_HDRS ${PROTO_FILES})
 
 message(STATUS "HDRS PATH: " ${PROTO_HDRS})
 message(STATUS "SRCS PATH: " ${PROTO_SRCS})
@@ -38,13 +23,15 @@ file(GLOB SOURCES "src/*.cpp" "../src/services.cpp"
                               )
 
 enable_testing()
+link_directories(${CMAKE_CURRENT_SOURCE_DIR}/third_party/gnmi)
 
-add_executable(dm_test ${PROTO_SRCS} ${PROTO_HDRS} ${SOURCES} )
+add_executable(dm_test ${CMAKE_CURRENT_SOURCE_DIR})
 target_link_libraries(dm_test gtest_main)
 target_link_libraries(dm_test pthread)
 target_link_libraries(dm_test ssl crypto)
 target_link_libraries(dm_test gtest)
-#target_link_libraries(dm_test gnmi)
+target_link_libraries(dm_test ${GNMI_PROTO_LIBRARIES})
+
 
 add_test(dm_gtests dm_test)
 gtest_discover_tests(dm_test)
